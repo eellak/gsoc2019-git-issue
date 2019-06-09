@@ -27,7 +27,7 @@
 # User agent string
 USER_AGENT=https://github.com/dspinellis/git-issue/tree/1c6e110
 
-if gdate 2> /dev/null ; then
+if gdate > /dev/null 2>&1; then
 # shellcheck disable=SC2209
 # SC2209 Use var=$(command) to assign output
 # Rationale: Dont want to assign output
