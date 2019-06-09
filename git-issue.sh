@@ -25,12 +25,16 @@
 #
 
 # User agent string
-USER_AGENT=https://github.com/dspinellis/git-issue/tree/17e1174
+USER_AGENT=https://github.com/dspinellis/git-issue/tree/1c6e110
 
-if command -v gdate > /dev/null ; then
-  DATEBIN="gdate"
+if gdate 2> /dev/null ; then
+# shellcheck disable=SC2209
+# SC2209 Use var=$(command) to assign output
+# Rationale: Dont want to assign output
+  DATEBIN=gdate
 else
-  DATEBIN="date"
+# shellcheck disable=SC2209
+  DATEBIN=date
 fi
 
 # Exit after displaying the specified error
@@ -709,7 +713,7 @@ sub_timeestimate()
   timeestimate=$($DATEBIN --date="1970-1-1 +$2" --utc +%s)|| usage_timeestimate
   if ! [ "$remove" ] ; then
     #check for negative time interval
-    if [ "$timespent" -lt 0 ] ; then
+    if [ "$timeestimate" -lt 0 ] ; then
       usage_timespent
     fi
   fi

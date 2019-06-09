@@ -160,7 +160,7 @@ TopDir=$(mktemp -d)
   echo "Test artifacts saved in $TopDir"
 } 1>&2
 
-if command -v gdate ; then
+if gdate 2> /dev/null ; then
   DATEBIN="gdate"                
 else
   DATEBIN="date"
