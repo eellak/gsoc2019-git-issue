@@ -454,18 +454,17 @@ else
     # modify and export
     try "$gi" create -n "$issue2" $ghrepo
     try "$gi" new -c "$ghrepo" -s "Issue exported directly"
-    try "$gi" assign "$issue2" octocat
+    "$gi" assign "$issue2" octocat
     try "$gi" export github $ghrepo
-    try "$gi" assign -r "$issue2" octocat
-    "$gi" assign "$issue" dspinellis
-    "$gi" assign "$issue" louridas
     # test milestone creation
     "$gi" new -s "milestone issue"
     issue3=$("$gi" list | awk '/milestone issue/{print $1}')
     "$gi" milestone "$issue3" worldpeace
+    "$gi" duedate "$issue3" week
+    "$gi" timeestimate "$issue3" 3hours
     try "$gi" create "$issue3" $ghrepo
     # delete repo
-    curl -H "$GI_CURL_AUTH" -s --request DELETE $ghrepourl | grep "{" && echo "Couldn't delete repository.\nYou probably don't have delete permittions activated on the OAUTH token.\nPlease delete $ghrepo manually."
+    curl -H "$GI_CURL_AUTH" -s --request DELETE $ghrepourl | grep "{" && printf "Couldn't delete repository.\nYou probably don't have delete permittions activated on the OAUTH token.\nPlease delete %s manually." $ghrepo
 
   else
     echo "Couldn't create test repository. Skipping export tests."
